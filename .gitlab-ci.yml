@@ -25,7 +25,7 @@ deploy:jdk8:
   script:
     - echo "${GPG_SECRET_KEY}" | gpg --import
     - gpg --list-key
-    - mvn versions:set -DnewVersion=$CI_COMMIT_TAG
+    - mvn $MAVEN_CLI_OPTS versions:set -DnewVersion=$(echo $CI_COMMIT_TAG | cut -c 2-)
     - mvn $MAVEN_CLI_OPTS clean deploy -s ci-settings.xml -DskipTests
   only:
     - tags
